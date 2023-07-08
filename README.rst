@@ -8,7 +8,7 @@ Overview
     :stub-columns: 1
 
     * - docs
-      - |docs| |readthedocs|
+      - |docs|
     * - build status
       - |testing| |codestyle|
 .. |docs| image:: https://github.com/PADRESat/padre_sharp/actions/workflows/docs.yml/badge.svg
@@ -29,7 +29,7 @@ A Python package to process and analyze data from PADRE SHARP.
 
 Contributing
 ------------
-We'd love your contributions! Please see our `contribution guide <./CONTRIBUTING.md>`.
+We'd love your contributions! Please see our `contribution guide <./CONTRIBUTING.md>`_.
 
 Code of Conduct
 ---------------
