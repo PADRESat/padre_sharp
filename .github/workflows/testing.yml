@@ -1,5 +1,5 @@
 # This workflow will install Python dependencies and run tests on expected user platforms
-name: Testing
+name: Testing on user machines
 
 on:
   push:
