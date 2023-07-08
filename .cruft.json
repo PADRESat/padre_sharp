@@ -1,0 +1,21 @@
+{
+  "template": "https://github.com/swxsoc/instrument_pkg_template.git",
+  "commit": "360350753dd24aea95fdf87984a42a8b7328046e",
+  "context": {
+    "cookiecutter": {
+        "mission_name": "PADRE",
+        "instr_name": "SHARP",
+        "author_name": "Pascal Saint-Hilaire",
+        "author_email": "shilaire@berkeley.edu",
+        "github_repo": "https://github.com/PADRESat/padre_sharp",
+        "readthedocs_url": "",
+        "project_url": "https://github.com/PADRESat/padre_sharp",
+        "minimum_python_version": "3.10",
+        "license": "Apache Software License 2.0",
+        "intellectual_property": "Copyrighted",
+        "year": "2023"
+    }
+  },
+  "directory": null,
+  "checkout": null
+}
