@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=45",
+            "setuptools_scm[toml]>=6.2",
+            "wheel"]
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = "padre_sharp"
+description = "A Python package to process and analyze data from the PADRE SHARP instrument."
+readme = "README.rst"
+dynamic = ["version"]
+authors = [{name = "Pascal Saint-Hilaire", email="shilaire@berkeley.edu"}]
+license = {file = "LICENSE.rst"}
+requires-python = ">=3.10"
+keywords = ["nasa mission", "space weather"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache 2.0",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+  'astropy>=4.1.0',
+  'numpy>=1.16.0',
+]
+
+[project.optional-dependencies]
+dev = [
+  'coverage>=5.0.3',
+  'pytest',
+  'pytest-astropy',
+  'pytest-cov',
+  'black',
+  'flake8',
+  'coverage[toml]'
+]
+
+docs = [
+  'sphinx',
+  'sphinx-automodapi'
+]
+
+test = [
+  'pytest',
+  'pytest-astropy',
+  'pytest-cov',
+  'coverage[toml]'
+]
+
+style = [
+  'black',
+  'flake8'
+]
+
+[tool.setuptools.package-data]
+"padre_sharp.data" = ["**"]
+
+[tool.setuptools]
+packages = ["padre_sharp"]
+
+[tool.setuptools_scm]
+write_to = "padre_sharp/_version.py"
+
+[tool.pytest.ini_options]
+testpaths = [
+   "padre_sharp/tests",
+   "docs"
+]
+doctest_plus = "enabled"
+text_file_format = "rst"
+addopts = "--doctest-rst"
+
+[tool.coverage.run]
+omit = [
+  'padre_sharp/__init*',
+  'padre_sharp/conftest.py',
+  'padre_sharp/*setup_package*',
+  'padre_sharp/tests/*',
+  'padre_sharp/*/tests/*',
+  'padre_sharp/extern/*',
+  'padre_sharp/version*',
+  '*/padre_sharp/__init*',
+  '*/padre_sharp/conftest.py',
+  '*/padre_sharp/*setup_package*',
+  '*/padre_sharp/tests/*',
+  '*/padre_sharp/*/tests/*',
+  '*/padre_sharp/extern/*',
+  '*/padre_sharp/version*',
+]
+
