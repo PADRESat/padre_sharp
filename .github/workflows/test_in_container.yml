@@ -1,5 +1,5 @@
 # This workflow will install Python dependencies and run tests in the docker container
-name: Testing
+name: Testing in pipeline container
 
 on:
   push:

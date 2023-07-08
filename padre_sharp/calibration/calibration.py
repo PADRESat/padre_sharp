@@ -8,10 +8,12 @@ from astropy.time import Time
 
 from padre_sharp import log
 
-__all__ = ["process_file",
-           "calibrate_file",
-           "get_calibration_file",
-           "read_calibration_file"]
+__all__ = [
+    "process_file",
+    "calibrate_file",
+    "get_calibration_file",
+    "read_calibration_file",
+]
 
 
 def process_file(data_filename: Path) -> list:
