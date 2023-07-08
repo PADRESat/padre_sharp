@@ -84,13 +84,21 @@ omit = [
   'padre_sharp/tests/*',
   'padre_sharp/*/tests/*',
   'padre_sharp/extern/*',
-  'padre_sharp/version*',
+  'padre_sharp/_version*',
   '*/padre_sharp/__init*',
   '*/padre_sharp/conftest.py',
   '*/padre_sharp/*setup_package*',
   '*/padre_sharp/tests/*',
   '*/padre_sharp/*/tests/*',
   '*/padre_sharp/extern/*',
-  '*/padre_sharp/version*',
+  '*/padre_sharp/_version*',
 ]
 
+[tool.black]
+line-length = 88
+extend-exclude = '''
+(
+  # Individual files to always exclude
+  ^/padre_sharp/_version.py
+)
+'''
