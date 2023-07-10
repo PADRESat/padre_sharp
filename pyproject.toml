@@ -25,14 +25,13 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Physics",
 ]
 dependencies = [
-  'astropy>=4.1.0',
-  'numpy>=1.16.0',
-  'sunpy>=3.1.4',
+  'astropy',
+  'sunpy',
 ]
 
 [project.optional-dependencies]
 dev = [
-  'coverage>=5.0.3',
+  'coverage',
   'pytest',
   'pytest-astropy',
   'pytest-cov',
