@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "padre_sharp"
-copyright = ""
+copyright = "Copyright 2023"
 author = "The PADRE SHARP Team"
 
 # The full version, including alpha/beta/rc tags
@@ -104,11 +104,9 @@ intersphinx_mapping = {
 html_theme = "bizstyle"
 html_static_path = ["_static"]
 
-#html_logo = "logo/SHARP_logo.png"
-#html_favicon = "logo/favicon.ico"
-#html_css_files = [
-#    "css/custom.css",
-#]
+html_logo = "logo/padre_logo.png"
+# html_favicon = "logo/favicon.ico"
+html_css_files = ["css/custom.css"]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
