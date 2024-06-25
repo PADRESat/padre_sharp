@@ -1,11 +1,13 @@
 """
 A module for all things calibration.
 """
+
 from pathlib import Path
 import random
 
 from astropy.time import Time
 
+from swxsoc.util import util
 from padre_sharp import log
 
 __all__ = [
@@ -34,7 +36,7 @@ def process_file(data_filename: Path) -> list:
     log.info(f"Processing file {data_filename}.")
     output_files = []
 
-    #  calibrated_file = calibrate_file(data_filename)
+    calibrated_file = calibrate_file(data_filename)
     output_files.append(calibrated_file)
     #  data_plot_files = plot_file(data_filename)
     #  calib_plot_files = plot_file(calibrated_file)
@@ -74,15 +76,40 @@ def calibrate_file(data_filename: Path, output_level=2) -> Path:
         )
     )
 
-    calib_file = get_calibration_file(data_filename)
-    if calib_file is None:
-        raise ValueError("Calibration file for {} not found.".format(data_filename))
+    file_metadata = util.parse_science_filename(data_filename)
+
+    # Temporary directory
+    tmp_dir = Path("/tmp")
+
+    if file_metadata is None:
+        log.error(f"Could not parse filename {data_filename}.")
+        return None
+
+    if file_metadata["level"] == "l0":
+        new_filename = tmp_dir / util.create_science_filename(
+            instrument=file_metadata["instrument"],
+            time=file_metadata["time"],
+            version=f"0.0.{file_metadata['version']}",
+            level="l1",
+        )
+        with open(new_filename, "w"):
+            pass
+
+    elif file_metadata["level"] == "l1":
+        new_filename = tmp_dir / util.create_science_filename(
+            instrument=file_metadata["instrument"],
+            time=file_metadata["time"],
+            version=file_metadata["version"],
+            level="ql",
+        )
+
+        with open(new_filename, "w"):
+            pass
     else:
-        calib_data = read_calibration_file(calib_file)
+        log.error(f"Could not calibrate file {data_filename}.")
+        raise ValueError(f"Cannot find calibration for file {data_filename}.")
 
-    # example log messages
-
-    return None
+    return new_filename
 
 
 def get_calibration_file(time: Time) -> Path:
