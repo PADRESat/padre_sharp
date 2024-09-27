@@ -7,7 +7,7 @@ def test_calibrate_file():
         calib.calibrate_file("datafile_with_no_calib.cdf")
     assert (
         str(excinfo.value)
-        == "Calibration file for datafile_with_no_calib.cdf not found."
+        == "File datafile_with_no_calib.cdf not recognized. Not a valid mission name."
     )
 
 
