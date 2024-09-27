@@ -27,6 +27,7 @@ classifiers = [
 dependencies = [
   'astropy',
   'sunpy',
+  'swxsoc @ git+https://github.com/swxsoc/swxsoc.git@main',
 ]
 
 [project.optional-dependencies]
