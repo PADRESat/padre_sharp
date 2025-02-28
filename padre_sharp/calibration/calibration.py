@@ -7,7 +7,7 @@ import random
 
 from astropy.time import Time
 
-from swxsoc.util import util
+from padre_sharp.util import util
 from padre_sharp import log
 
 __all__ = [
