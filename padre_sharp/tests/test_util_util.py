@@ -264,7 +264,7 @@ def test_science_filename_errors_l1_b():
         ("padre", "sharp", time, time_formatted, "l2", "eventlist", "1.2.3", "fits", f"padre_sharp_l2test_eventlist_{time_formatted}_v1.2.3.fits"),  # Test file
     ],
 )
-def test_parse_swxsoc_science_filename(
+def test_validate_swxsoc_science_filename(
     expected_mission, expected_instrument, expected_time, expected_formatted_time,
     expected_level, expected_descriptor, expected_version, expected_file_extension, expected_filename
 ):
