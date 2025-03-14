@@ -9,6 +9,7 @@ from astropy.time import Time
 
 from swxsoc.util import util
 from padre_sharp import log
+from padre_sharp.util import validation
 
 __all__ = [
     "process_file",
@@ -35,6 +36,16 @@ def process_file(data_filename: Path) -> list:
     """
     log.info(f"Processing file {data_filename}.")
     output_files = []
+    data_filename = Path(data_filename)
+
+    if data_filename.suffix == ".bin":
+        # Before we process, validate the file with CCSDS
+        custom_validators = [validation.validate_packet_checksums]
+        validation_findings = validation.validate(
+            data_filename, custom_validators=custom_validators
+        )
+        for finding in validation_findings:
+            log.warning(f"Validation Finding for File : {data_filename} : {finding}")
 
     calibrated_file = calibrate_file(data_filename)
     output_files.append(calibrated_file)
