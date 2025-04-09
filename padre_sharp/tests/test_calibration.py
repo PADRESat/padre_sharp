@@ -5,10 +5,7 @@ import padre_sharp.calibration as calib
 def test_calibrate_file():
     with pytest.raises(ValueError) as excinfo:
         calib.calibrate_file("datafile_with_no_calib.cdf")
-    assert (
-        str(excinfo.value)
-        == "Not a valid mission name: datafile"
-    )
+    assert str(excinfo.value) == "Not a valid mission name: datafile"
 
 
 def test_get_calibration_file():
