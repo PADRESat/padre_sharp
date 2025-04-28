@@ -1,4 +1,6 @@
 # see license/LICENSE.rst
+from pathlib import Path
+
 try:
     from ._version import version as __version__
     from ._version import version_tuple
@@ -21,3 +23,7 @@ log.debug(f"padre_sharp version: {__version__}")
 
 MISSION_NAME = "PADRE"
 INSTRUMENT_NAME = "SHARP"
+
+_package_directory = Path(__file__).parent
+_data_directory = _package_directory / "data"
+_test_files_directory = _package_directory / "data" / "test"
