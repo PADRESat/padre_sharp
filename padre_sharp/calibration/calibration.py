@@ -7,7 +7,7 @@ import random
 
 from astropy.time import Time
 
-from padre_sharp.util import util
+from swxsoc.util import util
 from padre_sharp import log
 from padre_sharp.util import validation
 
@@ -38,7 +38,7 @@ def process_file(data_filename: Path) -> list:
     output_files = []
     data_filename = Path(data_filename)
 
-    if data_filename.suffix == ".bin":
+    if data_filename.suffix in [".bin", ".dat"]:
         # Before we process, validate the file with CCSDS
         custom_validators = [validation.validate_packet_checksums]
         validation_findings = validation.validate(
@@ -97,6 +97,9 @@ def calibrate_file(data_filename: Path, output_level=2) -> Path:
         return None
 
     if file_metadata["level"] == "l0":
+        if not file_metadata["version"]:
+            # If the version is not specified, set it to 0.0.0
+            file_metadata["version"] = "0"
         new_filename = tmp_dir / util.create_science_filename(
             instrument=file_metadata["instrument"],
             time=file_metadata["time"],

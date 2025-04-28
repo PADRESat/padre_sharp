@@ -1,5 +1,34 @@
 import pytest
+from pathlib import Path
+
 import padre_sharp.calibration as calib
+
+
+def test_process_file():
+    # Test with a valid file to l0
+    result = calib.process_file(
+        Path("padre_sharp/tests/data/padreSP13_250403190411.dat")
+    )
+    assert isinstance(result, list)
+    assert len(result) == 1
+    assert result[0] == Path("/tmp/padre_sharp_l1_20250403T190411_v0.0.0.fits")
+
+    # Test processing the l1 file to ql
+    result = calib.process_file(Path("/tmp/padre_sharp_l1_20250403T190411_v0.0.0.fits"))
+    assert isinstance(result, list)
+    assert len(result) == 1
+    assert result[0] == Path("/tmp/padre_sharp_ql_20250403T190411_v0.0.0.fits")
+
+    # Test processing the ql and it raising a ValueError
+    with pytest.raises(ValueError) as excinfo:
+        calib.process_file(Path("/tmp/padre_sharp_ql_20250403T190411_v0.0.0.fits"))
+
+
+def test_process_file_invalid():
+    # Test with an invalid file
+    with pytest.raises(ValueError) as excinfo:
+        calib.process_file("padre_sharp/tests/data/invalid_file.bin")
+    assert str(excinfo.value) == "No valid instrument name found in invalid_file.bin"
 
 
 def test_calibrate_file():
@@ -7,7 +36,7 @@ def test_calibrate_file():
         calib.calibrate_file("datafile_with_no_calib.cdf")
     assert (
         str(excinfo.value)
-        == "File datafile_with_no_calib.cdf not recognized. Not a valid mission name."
+        == "No valid instrument name found in datafile_with_no_calib.cdf"
     )
 
 

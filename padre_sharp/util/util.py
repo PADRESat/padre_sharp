@@ -7,7 +7,7 @@ import os
 from astropy.time import Time
 
 
-__all__ = ["create_science_filename", "parse_science_filename", "VALID_DATA_LEVELS"]
+__all__ = ["create_science_filename", "VALID_DATA_LEVELS"]
 
 TIME_FORMAT_L0 = "%Y%j-%H%M%S"
 TIME_FORMAT = "%Y%m%dT%H%M%S"
@@ -56,6 +56,11 @@ def create_science_filename(
     ValueError: If the data product descriptor or instrument mode do not match the PADRE formatting conventions
     """
     test_str = ""
+
+    # Ensure mode and descriptor are always strings (never None)
+    mode = mode or ""
+    descriptor = descriptor or ""
+
     if instrument not in ["sharp"]:
         raise ValueError(f"Instrument, {instrument}, is not recognized.")
 
@@ -99,76 +104,3 @@ def create_science_filename(
     filename = filename.replace("__", "_")  # reformat if mode or descriptor not given
 
     return filename + FILENAME_EXTENSION
-
-
-def parse_science_filename(filepath: str) -> dict:
-    """
-    Parses a science filename into its consitutient properties (instrument, mode, test, time, level, version, descriptor).
-    Parameters
-    ----------
-    filepath: `str`
-        Fully specificied filepath of an input file
-    Returns
-    -------
-    result : `dict`
-        A dictionary with each property.
-    Raises
-    ------
-    ValueError: If the file's mission name is not "PADRE"
-    ValueError: If the file's instreument name is not one of the HERMES instruments
-    ValueError: If the data level >0 for packet files
-    ValueError: If not a CDF File
-    """
-
-    result = {
-        "instrument": None,
-        "mode": None,
-        "test": False,
-        "time": None,
-        "level": None,
-        "version": None,
-        "descriptor": None,
-    }
-
-    filename = os.path.basename(filepath)
-    file_name, file_ext = os.path.splitext(filename)
-
-    filename_components = file_name.split("_")
-
-    if filename_components[0] != "padre":
-        raise ValueError(f"File {filename} not recognized. Not a valid mission name.")
-
-    result["instrument"] = filename_components[1]
-
-    if file_ext == ".bin":
-        return {}  # TODO finish this
-    elif file_ext == ".fits":
-        if filename_components[1] not in "sharp":
-            raise ValueError(
-                "File {filename} not recognized. Not a valid instrument name."
-            )
-
-        result["time"] = Time.strptime(filename_components[-2], TIME_FORMAT)
-
-        # mode and descriptor are optional so need to figure out if one or both or none is included
-        if filename_components[2][0:2] not in VALID_DATA_LEVELS:
-            # if the first component is not data level then it is mode and the following is data level
-            result["mode"] = filename_components[2]
-            result["level"] = filename_components[3].replace("test", "")
-            if "test" in filename_components[3]:
-                result["test"] = True
-            if len(filename_components) == 7:
-                result["descriptor"] = filename_components[4]
-        else:
-            result["level"] = filename_components[2].replace("test", "")
-            if "test" in filename_components[2]:
-                result["test"] = True
-            if len(filename_components) == 6:
-                result["descriptor"] = filename_components[3]
-    else:
-        raise ValueError(f"File extension {file_ext} not recognized.")
-
-    result["instrument"] = filename_components[1]
-    result["version"] = filename_components[-1][1:]  # remove the v
-
-    return result

@@ -1,5 +1,10 @@
 # see license/LICENSE.rst
+import os
 from pathlib import Path
+
+# Get SWXSOC_MISSIONS environment variable if it exists or use default for mission
+SWXSOC_MISSION = os.getenv("SWXSOC_MISSION", "padre")
+os.environ["SWXSOC_MISSION"] = SWXSOC_MISSION
 
 try:
     from ._version import version as __version__
