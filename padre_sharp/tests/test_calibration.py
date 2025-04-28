@@ -1,27 +1,34 @@
 import pytest
 from pathlib import Path
+import tempfile
 
 import padre_sharp.calibration as calib
 
 
 def test_process_file():
+    temp_dir = Path(tempfile.gettempdir())
+
     # Test with a valid file to l0
     result = calib.process_file(
         Path("padre_sharp/tests/data/padreSP13_250403190411.dat")
     )
     assert isinstance(result, list)
     assert len(result) == 1
-    assert result[0] == Path("/tmp/padre_sharp_l1_20250403T190411_v0.0.0.fits")
+    assert result[0] == temp_dir / Path("padre_sharp_l1_20250403T190411_v0.0.0.fits")
 
     # Test processing the l1 file to ql
-    result = calib.process_file(Path("/tmp/padre_sharp_l1_20250403T190411_v0.0.0.fits"))
+    result = calib.process_file(
+        temp_dir / Path("padre_sharp_l1_20250403T190411_v0.0.0.fits")
+    )
     assert isinstance(result, list)
     assert len(result) == 1
-    assert result[0] == Path("/tmp/padre_sharp_ql_20250403T190411_v0.0.0.fits")
+    assert result[0] == temp_dir / Path("padre_sharp_ql_20250403T190411_v0.0.0.fits")
 
     # Test processing the ql and it raising a ValueError
     with pytest.raises(ValueError) as excinfo:
-        calib.process_file(Path("/tmp/padre_sharp_ql_20250403T190411_v0.0.0.fits"))
+        calib.process_file(
+            temp_dir / Path("padre_sharp_ql_20250403T190411_v0.0.0.fits")
+        )
 
 
 def test_process_file_invalid():
@@ -38,7 +45,6 @@ def test_calibrate_file():
         str(excinfo.value)
         == "No valid instrument name found in datafile_with_no_calib.cdf"
     )
-
 
 
 def test_get_calibration_file():
