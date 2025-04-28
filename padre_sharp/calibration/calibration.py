@@ -4,6 +4,8 @@ A module for all things calibration.
 
 from pathlib import Path
 import random
+import tempfile
+
 
 from astropy.time import Time
 
@@ -90,7 +92,7 @@ def calibrate_file(data_filename: Path, output_level=2) -> Path:
     file_metadata = util.parse_science_filename(data_filename)
 
     # Temporary directory
-    tmp_dir = Path("/tmp")
+    tmp_dir = Path(tempfile.gettempdir())
 
     if file_metadata is None:
         log.error(f"Could not parse filename {data_filename}.")

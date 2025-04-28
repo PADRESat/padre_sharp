@@ -2,10 +2,6 @@
 import os
 from pathlib import Path
 
-# Get SWXSOC_MISSIONS environment variable if it exists or use default for mission
-SWXSOC_MISSION = os.getenv("SWXSOC_MISSION", "padre")
-os.environ["SWXSOC_MISSION"] = SWXSOC_MISSION
-
 try:
     from ._version import version as __version__
     from ._version import version_tuple
@@ -15,6 +11,10 @@ except ImportError:
 
 from padre_sharp.util.config import load_config, print_config
 from padre_sharp.util.logger import _init_log
+
+# Get SWXSOC_MISSIONS environment variable if it exists or use default for mission
+SWXSOC_MISSION = os.getenv("SWXSOC_MISSION", "padre")
+os.environ["SWXSOC_MISSION"] = SWXSOC_MISSION
 
 # Load user configuration
 config = load_config()
