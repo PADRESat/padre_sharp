@@ -5,14 +5,14 @@ This module provides general utility functions.
 import os
 
 from astropy.time import Time
+from swxsoc import config
 
 
-__all__ = ["create_science_filename", "VALID_DATA_LEVELS"]
+__all__ = ["create_science_filename"]
 
 TIME_FORMAT_L0 = "%Y%j-%H%M%S"
 TIME_FORMAT = "%Y%m%dT%H%M%S"
 VALID_DESCRIPTORS = ["eventlist", "spec-eventlist", "spec", "xraydirect"]
-VALID_DATA_LEVELS = ["l0", "l1", "l2", "l3", "l4"]
 FILENAME_EXTENSION = ".fits"
 
 
@@ -35,7 +35,7 @@ def create_science_filename(
     time : `str` (in isot format) or ~astropy.time
         The time
     level : `str`
-        The data level. Must be one of the following "l0", "l1", "l2", "l3", "l4", "ql"
+        The data level. Must be one of the following "raw", "l0", "l1", "l2", "l3", "l4", "ql"
     version : `str`
         The file version which must be given as X.Y.Z
     descriptor : `str`
@@ -69,9 +69,9 @@ def create_science_filename(
     else:
         time_str = time.strftime(TIME_FORMAT)
 
-    if level not in VALID_DATA_LEVELS:
+    if level not in config["mission"]["valid_data_levels"]:
         raise ValueError(
-            f"Level, {level}, is not recognized. Must be one of {VALID_DATA_LEVELS[1:]}."
+            f"Level, {level}, is not recognized. Must be one of {config['mission']['valid_data_levels']}."
         )
     # check that version is in the right format with three parts
     if len(version.split(".")) != 3:

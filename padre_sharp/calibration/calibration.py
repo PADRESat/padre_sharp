@@ -98,14 +98,29 @@ def calibrate_file(data_filename: Path, output_level=2) -> Path:
         log.error(f"Could not parse filename {data_filename}.")
         return None
 
-    if file_metadata["level"] == "l0":
+    print(f"File metadata: {file_metadata}")
+
+    if file_metadata["level"] == "raw":
         if not file_metadata["version"]:
             # If the version is not specified, set it to 0.0.0
             file_metadata["version"] = "0"
         new_filename = tmp_dir / util.create_science_filename(
             instrument=file_metadata["instrument"],
             time=file_metadata["time"],
-            version=f"0.0.{file_metadata['version']}",
+            version="0.0.0",
+            level="l0",
+        )
+        with open(new_filename, "w"):
+            pass
+
+    elif file_metadata["level"] == "l0":
+        if not file_metadata["version"]:
+            # If the version is not specified, set it to 0.0.0
+            file_metadata["version"] = "0"
+        new_filename = tmp_dir / util.create_science_filename(
+            instrument=file_metadata["instrument"],
+            time=file_metadata["time"],
+            version=file_metadata["version"],
             level="l1",
         )
         with open(new_filename, "w"):

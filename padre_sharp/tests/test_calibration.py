@@ -10,24 +10,31 @@ def test_process_file():
 
     # Test with a valid file to l0
     result = calib.process_file(
-        Path("padre_sharp/tests/data/padreSP13_250403190411.dat")
+        Path("padre_sharp/tests/data/PADRESP13_250503042550.DAT")
     )
     assert isinstance(result, list)
     assert len(result) == 1
-    assert result[0] == temp_dir / Path("padre_sharp_l1_20250403T190411_v0.0.0.fits")
+    assert result[0] == temp_dir / Path("padre_sharp_l0_20250503T042550_v0.0.0.fits")
+
+    # Test processing the l0 file to l1
+    result = calib.process_file(
+        temp_dir / Path("padre_sharp_l0_20250503T042550_v0.0.0.fits")
+    )
+    assert isinstance(result, list)
+    assert len(result) == 1
+    assert result[0] == temp_dir / Path("padre_sharp_l1_20250503T042550_v0.0.0.fits")
 
     # Test processing the l1 file to ql
     result = calib.process_file(
-        temp_dir / Path("padre_sharp_l1_20250403T190411_v0.0.0.fits")
+        temp_dir / Path("padre_sharp_l1_20250503T042550_v0.0.0.fits")
     )
     assert isinstance(result, list)
     assert len(result) == 1
-    assert result[0] == temp_dir / Path("padre_sharp_ql_20250403T190411_v0.0.0.fits")
-
+    assert result[0] == temp_dir / Path("padre_sharp_ql_20250503T042550_v0.0.0.fits")
     # Test processing the ql and it raising a ValueError
     with pytest.raises(ValueError) as excinfo:
         calib.process_file(
-            temp_dir / Path("padre_sharp_ql_20250403T190411_v0.0.0.fits")
+            temp_dir / Path("padre_sharp_ql_20250503T042550_v0.0.0.fits")
         )
 
 
