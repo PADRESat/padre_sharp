@@ -71,7 +71,7 @@ def create_science_filename(
 
     if level not in config["mission"]["valid_data_levels"]:
         raise ValueError(
-            f"Level, {level}, is not recognized. Must be one of {config["mission"]["valid_data_levels"]}."
+            f"Level, {level}, is not recognized. Must be one of {config['mission']['valid_data_levels']}."
         )
     # check that version is in the right format with three parts
     if len(version.split(".")) != 3:
