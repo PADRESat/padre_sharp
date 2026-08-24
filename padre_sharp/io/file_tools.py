@@ -21,4 +21,4 @@ def read_file(data_filename):
     Examples
     --------
     """
-    return None
+    return

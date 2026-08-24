@@ -5,9 +5,9 @@ This code is based on that provided by SunPy see
     licenses/SUNPY.rst
 """
 
+import configparser
 import os
 import shutil
-import configparser
 from pathlib import Path
 
 import padre_sharp
@@ -17,7 +17,7 @@ from padre_sharp.util.exceptions import warn_user
 if not os.getenv("LAMBDA_ENVIRONMENT"):
     from sunpy.extern.appdirs import AppDirs
 
-__all__ = ["load_config", "copy_default_config", "print_config", "CONFIG_DIR"]
+__all__ = ["CONFIG_DIR", "copy_default_config", "load_config", "print_config"]
 
 # Default directories for Lambda Environment
 CONFIG_DIR = "/tmp/.config"
@@ -134,7 +134,7 @@ def print_config():
         print(f"  [{section}]")
         for option in padre_sharp.config.options(section):
             print(f"  {option} = padre_sharp.config.get(section, option)")
-        print("")
+        print()
 
 
 def _is_writable_dir(p):

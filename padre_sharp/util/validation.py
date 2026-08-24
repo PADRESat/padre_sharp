@@ -2,13 +2,11 @@
 This module contains utilities for file and packet validation.
 """
 
-from typing import List
-
 import numpy as np
 from ccsdspy import utils
 
 
-def validate_packet_checksums(file) -> List[str]:
+def validate_packet_checksums(file) -> list[str]:
     """
     Custom Validation Function to check that all packets have contents that match their checksums. This is achieved be a rolling XOR of the packet contents. If the final XOR value is not 0, a warning is issued.
 
@@ -26,12 +24,12 @@ def validate_packet_checksums(file) -> List[str]:
     packets = utils.split_packet_bytes(file)
     for i, packet in enumerate(packets):
         # Convert to an array of u16 integers
-        packet_arr = np.frombuffer(packet, dtype=np.uint8)
+        _packet_arr = np.frombuffer(packet, dtype=np.uint8)
 
         # Insert your custom checksum validation here
         # Included is MEDDEA's checksum validation as an example
 
-        # checksum_validation = np.bitwise_xor.reduce(packet_arr)
+        # checksum_validation = np.bitwise_xor.reduce(_packet_arr)
         checksum_validation = 0
 
         # Make sure the Checksum Validation was correct
@@ -46,8 +44,10 @@ def validate_packet_checksums(file) -> List[str]:
 
 
 def validate(
-    file, valid_apids: List[int] = None, custom_validators: List[callable] = None
-) -> List[str]:
+    file,
+    valid_apids: list[int] | None = None,
+    custom_validators: list[callable] | None = None,
+) -> list[str]:
     """
     Validate a file containing CCSDS packets and capturing any exceptions or warnings they generate.
     This function checks:

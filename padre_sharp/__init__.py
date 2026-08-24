@@ -10,6 +10,7 @@ except ImportError:
     version_tuple = (0, 0, "unknown version")
 
 import swxsoc
+
 from padre_sharp.util.config import load_config, print_config
 from padre_sharp.util.logger import _init_log
 

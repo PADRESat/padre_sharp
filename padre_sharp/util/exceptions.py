@@ -11,12 +11,12 @@ This code is based on that provided by SunPy see
 import warnings
 
 __all__ = [
-    "SHARPWarning",
-    "SHARPUserWarning",
     "SHARPDeprecationWarning",
     "SHARPPendingDeprecationWarning",
-    "warn_user",
+    "SHARPUserWarning",
+    "SHARPWarning",
     "warn_deprecated",
+    "warn_user",
 ]
 
 

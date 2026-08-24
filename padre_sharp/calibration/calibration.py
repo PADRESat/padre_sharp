@@ -3,13 +3,7 @@ A module for all things calibration.
 """
 
 from pathlib import Path
-import random
-import tempfile
 
-
-from astropy.time import Time
-
-from swxsoc.util import util
 from padre_sharp import log
 from padre_sharp.util import validation
 

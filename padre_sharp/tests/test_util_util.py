@@ -1,9 +1,10 @@
 """Tests for util.py"""
 
-import pytest
 import re
 
+import pytest
 from astropy.time import Time
+
 from padre_sharp.util import util
 
 time = "2024-04-06T12:06:21"
@@ -249,7 +250,7 @@ def test_validate_swxsoc_science_filename(
     assert match, f"Filename {expected_filename} does not match expected format"
 
     # Extract matched groups
-    mission, instrument, mode, level, test_flag, descriptor, time_str, version, extension = match.groups()
+    mission, instrument, _, level, test_flag, descriptor, time_str, version, extension = match.groups()
 
     # Ensure parsed values align with expected values
     assert mission == expected_mission, f"Mission mismatch: expected {expected_mission}, got {mission}"

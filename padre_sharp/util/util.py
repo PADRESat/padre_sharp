@@ -2,11 +2,8 @@
 This module provides general utility functions.
 """
 
-import os
-
 from astropy.time import Time
 from swxsoc import config
-
 
 __all__ = ["create_science_filename"]
 
@@ -81,7 +78,7 @@ def create_science_filename(
     # check that version has integers in each part
     for item in version.split("."):
         try:
-            int_value = int(item)
+            _int_value = int(item)
         except ValueError:
             raise ValueError(f"Version, {version}, is not all integers.")
 

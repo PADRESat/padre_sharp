@@ -1,6 +1,5 @@
-import pytest
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
 import padre_sharp.calibration as calib
 

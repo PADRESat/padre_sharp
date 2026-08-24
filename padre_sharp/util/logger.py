@@ -1,6 +1,6 @@
+import logging
 import os
 import sys
-import logging
 
 from astropy.logger import AstropyLogger
 
@@ -42,13 +42,13 @@ class MyLogger(AstropyLogger):
         # find the module object and thus the fully-package-specified module
         # name.  The module.__file__ is the original source file name.
         mod_name = None
-        mod_path, ext = os.path.splitext(mod_path)
+        mod_path, _ext = os.path.splitext(mod_path)
         for name, mod in list(sys.modules.items()):
             try:
                 # Believe it or not this can fail in some cases:
                 # https://github.com/astropy/astropy/issues/2671
                 path = os.path.splitext(getattr(mod, "__file__", ""))[0]
-            except Exception:
+            except Exception:  # NOQA
                 continue
             if path == mod_path:
                 mod_name = mod.__name__
