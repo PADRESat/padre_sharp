@@ -9,12 +9,15 @@ except ImportError:
     __version__ = "unknown version"
     version_tuple = (0, 0, "unknown version")
 
+import swxsoc
 from padre_sharp.util.config import load_config, print_config
 from padre_sharp.util.logger import _init_log
 
-# Get SWXSOC_MISSIONS environment variable if it exists or use default for mission
-SWXSOC_MISSION = os.getenv("SWXSOC_MISSION", "padre")
-os.environ["SWXSOC_MISSION"] = SWXSOC_MISSION
+# Force the mission environment variable and reconfigure swxsoc regardless of
+# import order (padre_sharp's own config/log below are independent of
+# swxsoc's, but other padre_sharp modules read swxsoc.config directly)
+os.environ["SWXSOC_MISSION"] = "padre"
+swxsoc.reconfigure()
 
 # Load user configuration
 config = load_config()
